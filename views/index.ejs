@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>E-commerce Dashboard</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<h1>Mini E-commerce Dashboard</h1>
+
+<!-- ✅ Product List -->
+<h2>Available Products</h2>
+<section>
+  <ul>
+    <% products.forEach(product => { %>
+      <li>
+        <strong><%= product.name %></strong> — R<%= product.price %> (<%= product.stock %> in stock)
+
+        <!-- ✅ Edit Form -->
+        <form action="/edit-product" method="POST">
+          <input type="hidden" name="id" value="<%= product._id %>">
+          <input name="name" value="<%= product.name %>" required>
+          <input name="price" type="number" value="<%= product.price %>" required>
+          <input name="stock" type="number" value="<%= product.stock %>" required>
+          <button type="submit">Edit</button>
+        </form>
+
+        <!-- ✅ Delete Form -->
+        <form action="/delete-product" method="POST">
+          <input type="hidden" name="id" value="<%= product._id %>">
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+</section>
+
+<!-- ✅ Add Product -->
+<h2>Add a New Product</h2>
+<section>
+  <form action="/add-product" method="POST">
+    <input name="name" placeholder="Product Name" required>
+    <input name="price" type="number" placeholder="Price" required>
+    <input name="stock" type="number" placeholder="Stock" required>
+    <input name="category" placeholder="Category">
+    <input name="tags" placeholder="Tags (comma-separated)">
+    <button type="submit">Add Product</button>
+  </form>
+</section>
+
+<!-- ✅ Register User -->
+<h2>Register New User</h2>
+<section>
+  <form action="/add-user" method="POST">
+    <input name="username" placeholder="Username" required>
+    <input name="email" type="email" placeholder="Email" required>
+    <input name="password" type="password" placeholder="Password" required>
+    <input name="line1" placeholder="Address Line 1">
+    <input name="city" placeholder="City">
+    <input name="zip" placeholder="ZIP Code">
+    <button type="submit">Register</button>
+  </form>
+</section>
+
+<!-- ✅ Place Order -->
+<h2>Place an Order</h2>
+<section>
+  <form action="/add-order" method="POST">
+    <input name="userId" placeholder="User ID" required>
+    <input name="productId" placeholder="Product ID" required>
+    <input name="productName" placeholder="Product Name" required>
+    <input name="price" type="number" placeholder="Price" required>
+    <input name="quantity" type="number" placeholder="Quantity" required>
+    <button type="submit">Place Order</button>
+  </form>
+</section>
+
+<!-- ✅ Submit Review -->
+<h2>Submit a Product Review</h2>
+<section>
+  <form action="/add-review" method="POST">
+    <input name="productId" placeholder="Product ID" required>
+    <input name="userId" placeholder="User ID" required>
+    <input name="rating" type="number" min="1" max="5" placeholder="Rating (1–5)" required>
+    <textarea name="comment" placeholder="Your review" rows="3"></textarea>
+    <button type="submit">Submit Review</button>
+  </form>
+</section>
+
+<!-- ✅ Show Orders -->
+<h2>All Orders</h2>
+<section>
+  <ul>
+    <% orders.forEach(order => { %>
+      <li>
+        🧾 <strong>User:</strong> <%= order.userId %> | <%= new Date(order.createdAt).toLocaleString() %><br>
+        <strong>Status:</strong> <%= order.status %>
+        <ul>
+          <% order.items.forEach(item => { %>
+            <li>📦 <%= item.name %> — R<%= item.price %> × <%= item.quantity %></li>
+          <% }) %>
+        </ul>
+      </li>
+    <% }) %>
+  </ul>
+</section>
+
+<!-- ✅ Show Reviews -->
+<h2>Product Reviews</h2>
+<section>
+  <ul>
+    <% reviews.forEach(review => { %>
+      <li>
+        ⭐ <strong><%= review.rating %>/5</strong> — <%= review.comment %><br>
+        Product: <%= review.productId %> | User: <%= review.userId %>
+      </li>
+    <% }) %>
+  </ul>
+</section>
+
+</body>
+</html>
