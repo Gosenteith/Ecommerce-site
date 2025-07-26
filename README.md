@@ -86,5 +86,8 @@ You’ll see a dashboard where you can:
  Author
 
 Zirong Luo 600287
+Gideon Johannes Humphries 600651
+Michael Ellis 600332
+
 Database Development 371/381  
 South Africa · 2025
